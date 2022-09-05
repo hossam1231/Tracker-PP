@@ -26,9 +26,7 @@ export default function ProfileScreen() {
       <Box safeArea p={"2"} py="8" w="90%" maxW={"500"}>
         <VStack space={5}>
           <HStack justifyContent={"space-between"}>
-            <Heading fontFamily="Manrope-Bold" fontSize={"2xl"}>
-              Task
-            </Heading>
+            <Heading fontFamily="Manrope-Bold">Task</Heading>
             <IconButton
               size={size}
               _icon={{
@@ -74,7 +72,7 @@ export default function ProfileScreen() {
           </Box>
           <HStack justifyContent={"space-between"} alignItems="center">
             <Box h="20">
-              <Heading>Today</Heading>
+              <Heading fontFamily="Manrope-Bold">Today</Heading>
             </Box>
             <Box h="20">
               <Text sub fontFamily="Manrope-ExtraBold ">
