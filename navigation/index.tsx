@@ -1,15 +1,10 @@
-import React from 'react';
-import { useAuthentication } from '../utils/hooks/useAuthentication';
-import UserStack from './userStack';
-import AuthStack from './authStack';
-import HydratePartner from '../scripts/HydratePartner';
+import React from "react";
+import { useAuthentication } from "../utils/hooks/useAuthentication";
+import UserStack from "./userStack";
+import AuthStack from "./authStack";
 
 export default function RootNavigation() {
   const { user } = useAuthentication();
 
-  return user ?
-    <HydratePartner user={user}>
-      <UserStack user={user} />
-    </HydratePartner>
-    : <AuthStack />;
+  return user ? <UserStack user={user} /> : <AuthStack />;
 }
