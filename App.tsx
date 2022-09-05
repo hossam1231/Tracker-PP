@@ -4,9 +4,33 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ThemeProvider } from "react-native-elements";
 import "./config/firebase";
 import RootNavigation from "./navigation";
-import { NativeBaseProvider, Center, Spinner } from "native-base";
+import {
+  NativeBaseProvider,
+  Heading,
+  HStack,
+  Center,
+  Spinner,
+} from "native-base";
 import useCachedResources from "./hooks/useCachedResources";
-import LoadingScreen from "./screens/Loading/LoadingScreen";
+
+function LoadingScreen() {
+  return (
+    <Center flex="1">
+      <Spin />
+    </Center>
+  );
+}
+
+const Spin = () => {
+  return (
+    <HStack space={2} justifyContent="center">
+      <Spinner accessibilityLabel="Loading posts" />
+      <Heading color="black" fontSize="md">
+        Loading
+      </Heading>
+    </HStack>
+  );
+};
 
 export default function Application() {
   return <App />;
