@@ -1,14 +1,19 @@
+import { FontAwesome } from "@expo/vector-icons";
 import {
   FlatList,
   Avatar,
+  IconButton,
   Spacer,
   Text,
+  Badge,
   Box,
   Heading,
   HStack,
   VStack,
 } from "native-base";
 import React from "react";
+
+let size = "lg";
 
 const ActivityCell = () => {
   const data = [
@@ -53,31 +58,26 @@ const ActivityCell = () => {
     },
   ];
   return (
-    <Box>
-      <Heading fontSize="xl" p="4" pb="3">
-        Inbox
-      </Heading>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => (
-          <Box
-            borderBottomWidth="1"
-            _dark={{
-              borderColor: "muted.50",
-            }}
-            borderColor="muted.800"
-            pl={["0", "4"]}
-            pr={["0", "5"]}
-            py="2"
-          >
-            <HStack space={[2, 3]} justifyContent="space-between">
+    <FlatList
+      data={data}
+      renderItem={({ item }) => (
+        <Box
+          mb="5"
+          rounded="xl"
+          bg="white"
+          pl={["0", "4"]}
+          pr={["0", "5"]}
+          py="2"
+        >
+          <HStack p="5px" space={[2, 3]} justifyContent="space-between">
+            <HStack space={5}>
               <Avatar
                 size="48px"
                 source={{
                   uri: item.avatarUrl,
                 }}
               />
-              <VStack>
+              <VStack space={3}>
                 <Text
                   _dark={{
                     color: "warmGray.50",
@@ -87,16 +87,15 @@ const ActivityCell = () => {
                 >
                   {item.fullName}
                 </Text>
-                <Text
-                  color="coolGray.600"
-                  _dark={{
-                    color: "warmGray.200",
-                  }}
-                >
-                  {item.recentText}
-                </Text>
+
+                <HStack space={2}>
+                  <Badge colorScheme="danger">Work</Badge>
+                  <Badge>Raison project</Badge>
+                </HStack>
               </VStack>
-              <Spacer />
+            </HStack>
+
+            <VStack>
               <Text
                 fontSize="xs"
                 _dark={{
@@ -107,12 +106,20 @@ const ActivityCell = () => {
               >
                 {item.timeStamp}
               </Text>
-            </HStack>
-          </Box>
-        )}
-        keyExtractor={(item) => item.id}
-      />
-    </Box>
+              <IconButton
+                size={size}
+                _icon={{
+                  as: FontAwesome,
+                  name: "play",
+                  color: "#999999",
+                }}
+              />
+            </VStack>
+          </HStack>
+        </Box>
+      )}
+      keyExtractor={(item) => item.id}
+    />
   );
 };
 
