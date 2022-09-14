@@ -1,4 +1,5 @@
-import { React, useState, useEffect } from "react";
+import * as React from "react";
+import { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ThemeProvider } from "react-native-elements";
@@ -33,7 +34,11 @@ const Spin = () => {
 };
 
 export default function Application() {
-  return <App />;
+  return (
+    <SafeAreaProvider>
+      <App />
+    </SafeAreaProvider>
+  );
 }
 
 function App() {

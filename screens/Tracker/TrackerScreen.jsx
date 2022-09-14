@@ -21,7 +21,9 @@ import ActivityCell from "../../cells/ActivityCell";
 import { FontAwesome } from "@expo/vector-icons";
 import { FlatList } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
 let size = "lg";
+
 const data = [
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
@@ -69,138 +71,151 @@ export default function TrackerScreen() {
 
   return (
     <Box flex="1" bg="#fafaff">
-      <Center w="100%">
-        <Box safeArea p={"2"} py="8" w="90%" maxW={"500"}>
-          <VStack space={5}>
-            <HStack alignItems="center" justifyContent={"space-between"}>
-              <Text fontFamily="Manrope-ExtraBold" fontSize="4xl">
-                Task
-              </Text>
-              <IconButton
-                size={size}
-                _icon={{
-                  as: AntDesign,
-                  color: "black",
-                  name: "ellipsis1",
-                }}
-              />
-            </HStack>
-            <Box rounded={"lg"} p="5" h="100" w="100%" bg="black">
-              <HStack
-                w="100%"
-                alignItems="center"
-                justifyContent={"space-between"}
-              >
-                <VStack space={3}>
-                  <Text
-                    color="white"
-                    fontSize={"xl"}
-                    fontFamily="Manrope-ExtraBold"
-                  >
-                    44:55:22
-                  </Text>
-                  <HStack alignItems="center" space={2}>
-                    <Spinner color="white" />
+      <SafeAreaView>
+        <Center flex="1">
+          <Box p={"2"} py="8" w="90%" maxW={"500"}>
+            <VStack space={5}>
+              <HStack alignItems="center" justifyContent={"space-between"}>
+                <Text fontFamily="Manrope-ExtraBold" fontSize="4xl">
+                  Task
+                </Text>
+                <IconButton
+                  variant={"filled"}
+                  size={size}
+                  _icon={{
+                    as: AntDesign,
+                    color: "black",
+                    name: "ellipsis1",
+                  }}
+                />
+              </HStack>
+              <Box rounded={"lg"} p="5" h="100" w="100%" bg="black">
+                <HStack
+                  w="100%"
+                  alignItems="center"
+                  justifyContent={"space-between"}
+                >
+                  <VStack space={3}>
                     <Text
                       color="white"
-                      fontFamily="Manrope-Light"
-                      fontSize={"sm"}
+                      fontSize={"xl"}
+                      fontFamily="Manrope-ExtraBold"
                     >
-                      ranison project
+                      44:55:22
                     </Text>
-                  </HStack>
-                </VStack>
-                <Box>
-                  <IconButton
-                    size={size}
-                    _icon={{
-                      color: "white",
-                      as: Entypo,
-                      name: "chevron-right",
-                    }}
-                  />
-                </Box>
-              </HStack>
-            </Box>
-            <HStack
-              w="100%"
-              justifyContent={"space-between"}
-              alignItems="center"
-            >
-              <Text fontSize="4xl" fontFamily="Manrope-ExtraBold">
-                Today
-              </Text>
+                    <HStack alignItems="center" space={2}>
+                      <Spinner color="white" />
+                      <Text
+                        color="white"
+                        fontFamily="Manrope-Light"
+                        fontSize={"sm"}
+                      >
+                        ranison project
+                      </Text>
+                    </HStack>
+                  </VStack>
+                  <Box>
+                    <IconButton
+                      variant={"filled"}
+                      size={size}
+                      _icon={{
+                        color: "white",
+                        as: Entypo,
+                        name: "chevron-right",
+                      }}
+                    />
+                  </Box>
+                </HStack>
+              </Box>
+              <HStack
+                w="100%"
+                justifyContent={"space-between"}
+                alignItems="center"
+              >
+                <Text fontSize="4xl" fontFamily="Manrope-ExtraBold">
+                  Today
+                </Text>
 
-              <Text fontSize="md" fontFamily="Manrope-Bold">
-                See all
-              </Text>
-            </HStack>
-            <FlatList
-              data={data}
-              renderItem={({ item }) => (
-                <Box
-                  mb="5"
-                  rounded="xl"
-                  bg="white"
-                  pl={["0", "4"]}
-                  pr={["0", "5"]}
-                  py="2"
-                >
-                  <HStack p="5px" space={[2, 3]} justifyContent="space-between">
-                    <HStack space={5}>
-                      <Avatar
-                        size="48px"
-                        source={{
-                          uri: item.avatarUrl,
-                        }}
-                      />
-                      <VStack space={3}>
+                <Text fontSize="md" fontFamily="Manrope-Bold">
+                  See all
+                </Text>
+              </HStack>
+              <FlatList
+                data={data}
+                renderItem={({ item }) => (
+                  <Box
+                    mb="5"
+                    rounded="xl"
+                    bg="white"
+                    pl={["0", "4"]}
+                    pr={["0", "5"]}
+                    py="2"
+                  >
+                    <HStack
+                      p="5px"
+                      space={[2, 3]}
+                      justifyContent="space-between"
+                    >
+                      <HStack space={5}>
+                        <Avatar
+                          size="48px"
+                          source={{
+                            uri: item.avatarUrl,
+                          }}
+                        />
+                        <VStack space={3}>
+                          <Text
+                            _dark={{
+                              color: "warmGray.50",
+                            }}
+                            color="coolGray.800"
+                            bold
+                          >
+                            {item.fullName}
+                          </Text>
+
+                          <HStack space={2}>
+                            <Badge colorScheme="danger">Work</Badge>
+                            <Badge>Raison project</Badge>
+                          </HStack>
+                        </VStack>
+                      </HStack>
+
+                      <VStack>
                         <Text
+                          fontSize="xs"
                           _dark={{
                             color: "warmGray.50",
                           }}
                           color="coolGray.800"
-                          bold
+                          alignSelf="flex-start"
                         >
-                          {item.fullName}
+                          {item.timeStamp}
                         </Text>
-
-                        <HStack space={2}>
-                          <Badge colorScheme="danger">Work</Badge>
-                          <Badge>Raison project</Badge>
-                        </HStack>
+                        <IconButton
+                          variant={"filled"}
+                          onPress={() =>
+                            navigation.navigate("Play", {
+                              tracker: item,
+                            })
+                          }
+                          size={size}
+                          _icon={{
+                            as: FontAwesome,
+                            name: "play",
+                            color: "#999999",
+                          }}
+                        />
                       </VStack>
                     </HStack>
-
-                    <VStack>
-                      <Text
-                        fontSize="xs"
-                        _dark={{
-                          color: "warmGray.50",
-                        }}
-                        color="coolGray.800"
-                        alignSelf="flex-start"
-                      >
-                        {item.timeStamp}
-                      </Text>
-                      <IconButton
-                        onPress={() => navigation.navigate("Play")}
-                        size={size}
-                        _icon={{
-                          as: FontAwesome,
-                          name: "play",
-                          color: "#999999",
-                        }}
-                      />
-                    </VStack>
-                  </HStack>
-                </Box>
-              )}
-              keyExtractor={(item) => item.id}
-            />
-          </VStack>
-        </Box>
-      </Center>
+                  </Box>
+                )}
+                keyExtractor={(item) => item.id}
+              />
+            </VStack>
+          </Box>
+        </Center>
+      </SafeAreaView>
       <Box
         alignItems="center"
         justifyContent="center"
