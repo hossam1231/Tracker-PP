@@ -20,6 +20,7 @@ import React from "react";
 import ActivityCell from "../../cells/ActivityCell";
 import { FontAwesome } from "@expo/vector-icons";
 import { FlatList } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 let size = "lg";
 const data = [
   {
@@ -61,8 +62,11 @@ const data = [
     avatarUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU",
   },
-]; 
+];
+
 export default function TrackerScreen() {
+  const navigation = useNavigation();
+
   return (
     <Box flex="1" bg="#fafaff">
       <Center w="100%">
@@ -132,67 +136,68 @@ export default function TrackerScreen() {
               </Text>
             </HStack>
             <FlatList
-      data={data}
-      renderItem={({ item }) => (
-        <Box
-          mb="5"
-          rounded="xl"
-          bg="white"
-          pl={["0", "4"]}
-          pr={["0", "5"]}
-          py="2"
-        >
-          <HStack p="5px" space={[2, 3]} justifyContent="space-between">
-            <HStack space={5}>
-              <Avatar
-                size="48px"
-                source={{
-                  uri: item.avatarUrl,
-                }}
-              />
-              <VStack space={3}>
-                <Text
-                  _dark={{
-                    color: "warmGray.50",
-                  }}
-                  color="coolGray.800"
-                  bold
+              data={data}
+              renderItem={({ item }) => (
+                <Box
+                  mb="5"
+                  rounded="xl"
+                  bg="white"
+                  pl={["0", "4"]}
+                  pr={["0", "5"]}
+                  py="2"
                 >
-                  {item.fullName}
-                </Text>
+                  <HStack p="5px" space={[2, 3]} justifyContent="space-between">
+                    <HStack space={5}>
+                      <Avatar
+                        size="48px"
+                        source={{
+                          uri: item.avatarUrl,
+                        }}
+                      />
+                      <VStack space={3}>
+                        <Text
+                          _dark={{
+                            color: "warmGray.50",
+                          }}
+                          color="coolGray.800"
+                          bold
+                        >
+                          {item.fullName}
+                        </Text>
 
-                <HStack space={2}>
-                  <Badge colorScheme="danger">Work</Badge>
-                  <Badge>Raison project</Badge>
-                </HStack>
-              </VStack>
-            </HStack>
+                        <HStack space={2}>
+                          <Badge colorScheme="danger">Work</Badge>
+                          <Badge>Raison project</Badge>
+                        </HStack>
+                      </VStack>
+                    </HStack>
 
-            <VStack>
-              <Text
-                fontSize="xs"
-                _dark={{
-                  color: "warmGray.50",
-                }}
-                color="coolGray.800"
-                alignSelf="flex-start"
-              >
-                {item.timeStamp}
-              </Text>
-              <IconButton onPress={()=>navigation.navigate("Play")}
-                size={size}
-                _icon={{
-                  as: FontAwesome,
-                  name: "play",
-                  color: "#999999",
-                }}
-              />
-            </VStack>
-          </HStack>
-        </Box>
-      )}
-      keyExtractor={(item) => item.id}
-    />
+                    <VStack>
+                      <Text
+                        fontSize="xs"
+                        _dark={{
+                          color: "warmGray.50",
+                        }}
+                        color="coolGray.800"
+                        alignSelf="flex-start"
+                      >
+                        {item.timeStamp}
+                      </Text>
+                      <IconButton
+                        onPress={() => navigation.navigate("Play")}
+                        size={size}
+                        _icon={{
+                          as: FontAwesome,
+                          name: "play",
+                          color: "#999999",
+                        }}
+                      />
+                    </VStack>
+                  </HStack>
+                </Box>
+              )}
+              keyExtractor={(item) => item.id}
+            />
           </VStack>
         </Box>
       </Center>

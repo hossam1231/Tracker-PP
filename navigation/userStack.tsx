@@ -13,13 +13,13 @@ export default function userStack() {
       <Stack.Navigator>
         <Stack.Screen
           options={{ headerShown: false }}
-          name="Play"
-          component={TrackerPlayScreen}
+          name="Home"
+          component={TrackerScreen}
         />
         <Stack.Screen
           options={{ headerShown: false }}
-          name="Home"
-          component={TrackerScreen}
+          name="Play"
+          component={TrackerPlayScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

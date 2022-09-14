@@ -17,7 +17,9 @@ import React from "react";
 let size = "lg";
 
 
-const ActivityCell = () => {const navigation = useNavigation()
+const ActivityCell = () => {
+  
+  const navigation = useNavigation()
 
   
   return (
