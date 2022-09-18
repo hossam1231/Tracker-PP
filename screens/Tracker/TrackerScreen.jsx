@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+import LottieView from "lottie-react-native";
 import { Entypo, AntDesign } from "@expo/vector-icons";
 import {
   IconButton,
@@ -15,13 +17,15 @@ import {
   Spinner,
   Avatar,
   Badge,
+  CheckIcon,
+  AddIcon,
 } from "native-base";
-import React from "react";
 import ActivityCell from "../../cells/ActivityCell";
 import { FontAwesome } from "@expo/vector-icons";
 import { FlatList } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import LottieComponent from "../../components/lottie";
 let size = "lg";
 
 const data = [
@@ -67,6 +71,8 @@ const data = [
 ];
 
 export default function TrackerScreen() {
+  const [history, setHistory] = useState();
+  const [task, setTask] = useState();
   const navigation = useNavigation();
 
   return (
@@ -89,44 +95,64 @@ export default function TrackerScreen() {
                   }}
                 />
               </HStack>
-              <Box rounded={"lg"} p="5" h="100" w="100%" bg="black">
-                <HStack
-                  w="100%"
-                  alignItems="center"
-                  justifyContent={"space-between"}
-                >
-                  <VStack space={3}>
-                    <Text
-                      color="white"
-                      fontSize={"xl"}
-                      fontFamily="Manrope-ExtraBold"
-                    >
-                      44:55:22
-                    </Text>
-                    <HStack alignItems="center" space={2}>
-                      <Spinner color="white" />
+              {task ? (
+                <Box rounded={"lg"} p="5" h="100" w="100%" color="black">
+                  <HStack
+                    w="100%"
+                    alignItems="center"
+                    justifyContent={"space-between"}
+                  >
+                    <VStack space={3}>
                       <Text
                         color="white"
-                        fontFamily="Manrope-Light"
-                        fontSize={"sm"}
+                        fontSize={"xl"}
+                        fontFamily="Manrope-ExtraBold"
                       >
-                        ranison project
+                        44:55:22
                       </Text>
-                    </HStack>
+                      <HStack alignItems="center" space={2}>
+                        <Spinner color="white" />
+                        <Text
+                          color="white"
+                          fontFamily="Manrope-Light"
+                          fontSize={"sm"}
+                        >
+                          ranison project
+                        </Text>
+                      </HStack>
+                    </VStack>
+                    <Box>
+                      <IconButton
+                        variant={"filled"}
+                        size={size}
+                        _icon={{
+                          color: "white",
+                          as: Entypo,
+                          name: "chevron-right",
+                        }}
+                      />
+                    </Box>
+                  </HStack>
+                </Box>
+              ) : (
+                <Box
+                  rounded={"lg"}
+                  p="5"
+                  justifyContent="center"
+                  alignItems="center"
+                  h="100"
+                  w="100%"
+                  color="white"
+                >
+                  <VStack space={2} alignItems="center">
+                    <Text fontFamily="Manrope-ExtraBold">Uh Oh...</Text>
+                    <Text sub fontFamily="Manrope-Bold" color="#999999">
+                      You dont have any trackers running
+                    </Text>
+                    <AddIcon />
                   </VStack>
-                  <Box>
-                    <IconButton
-                      variant={"filled"}
-                      size={size}
-                      _icon={{
-                        color: "white",
-                        as: Entypo,
-                        name: "chevron-right",
-                      }}
-                    />
-                  </Box>
-                </HStack>
-              </Box>
+                </Box>
+              )}
               <HStack
                 w="100%"
                 justifyContent={"space-between"}
@@ -140,78 +166,96 @@ export default function TrackerScreen() {
                   See all
                 </Text>
               </HStack>
-              <FlatList
-                data={data}
-                renderItem={({ item }) => (
-                  <Box
-                    mb="5"
-                    rounded="xl"
-                    bg="white"
-                    pl={["0", "4"]}
-                    pr={["0", "5"]}
-                    py="2"
-                  >
-                    <HStack
-                      p="5px"
-                      space={[2, 3]}
-                      justifyContent="space-between"
+              {history ? (
+                <FlatList
+                  data={data}
+                  renderItem={({ item }) => (
+                    <Box
+                      mb="5"
+                      rounded="xl"
+                      bg="white"
+                      pl={["0", "4"]}
+                      pr={["0", "5"]}
+                      py="2"
                     >
-                      <HStack space={5}>
-                        <Avatar
-                          size="48px"
-                          source={{
-                            uri: item.avatarUrl,
-                          }}
-                        />
-                        <VStack space={3}>
+                      <HStack
+                        p="5px"
+                        space={[2, 3]}
+                        justifyContent="space-between"
+                      >
+                        <HStack space={5}>
+                          <Avatar
+                            size="48px"
+                            source={{
+                              uri: item.avatarUrl,
+                            }}
+                          />
+                          <VStack space={3}>
+                            <Text
+                              _dark={{
+                                color: "warmGray.50",
+                              }}
+                              color="coolGray.800"
+                              bold
+                            >
+                              {item.fullName}
+                            </Text>
+
+                            <HStack space={2}>
+                              <Badge colorScheme="danger">Work</Badge>
+                              <Badge>Raison project</Badge>
+                            </HStack>
+                          </VStack>
+                        </HStack>
+
+                        <VStack>
                           <Text
+                            fontSize="xs"
                             _dark={{
                               color: "warmGray.50",
                             }}
                             color="coolGray.800"
-                            bold
+                            alignSelf="flex-start"
                           >
-                            {item.fullName}
+                            {item.timeStamp}
                           </Text>
-
-                          <HStack space={2}>
-                            <Badge colorScheme="danger">Work</Badge>
-                            <Badge>Raison project</Badge>
-                          </HStack>
+                          <IconButton
+                            variant={"filled"}
+                            onPress={() =>
+                              navigation.navigate("Play", {
+                                tracker: item,
+                              })
+                            }
+                            size={size}
+                            _icon={{
+                              as: FontAwesome,
+                              name: "play",
+                              color: "#999999",
+                            }}
+                          />
                         </VStack>
                       </HStack>
-
-                      <VStack>
-                        <Text
-                          fontSize="xs"
-                          _dark={{
-                            color: "warmGray.50",
-                          }}
-                          color="coolGray.800"
-                          alignSelf="flex-start"
-                        >
-                          {item.timeStamp}
-                        </Text>
-                        <IconButton
-                          variant={"filled"}
-                          onPress={() =>
-                            navigation.navigate("Play", {
-                              tracker: item,
-                            })
-                          }
-                          size={size}
-                          _icon={{
-                            as: FontAwesome,
-                            name: "play",
-                            color: "#999999",
-                          }}
-                        />
-                      </VStack>
-                    </HStack>
-                  </Box>
-                )}
-                keyExtractor={(item) => item.id}
-              />
+                    </Box>
+                  )}
+                  keyExtractor={(item) => item.id}
+                />
+              ) : (
+                <VStack
+                  justifyContent="center"
+                  alignItems="center"
+                  space={5}
+                  flex="1"
+                >
+                  <LottieComponent />
+                  <Text fontSize="2xl" fontFamily="Manrope-Light">
+                    Bzzzzzzz...
+                  </Text>
+                  <Text fontFamily="Manrope-ExtraBold">No activity found</Text>
+                  <Text underline sub color="#999999">
+                    Chose another timeframe
+                  </Text>
+                </VStack>
+              )}
             </VStack>
           </Box>
         </Center>
